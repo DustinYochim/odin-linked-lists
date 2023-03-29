@@ -1,3 +1,10 @@
+function Node(value = null, nextNode = null) {
+  return {
+    value,
+    nextNode,
+  };
+}
+
 function LinkedList() {
   return {
     head: null,
@@ -94,13 +101,35 @@ function LinkedList() {
       }
       return null;
     },
-  };
-}
-
-function Node(value = null, nextNode = null) {
-  return {
-    value,
-    nextNode,
+    insertAt: function (value, index) {
+      let current = this.head;
+      let previous;
+      let i = 0;
+      while (current) {
+        if (i === index) {
+          let node = Node(value);
+          previous.nextNode = node;
+          node.nextNode = current;
+        }
+        previous = current;
+        current = current.nextNode;
+        i++;
+      }
+    },
+    removeAt(index) {
+      let current = this.head;
+      let previous;
+      let i = 0;
+      while (current) {
+        if (i === index) {
+          previous.nextNode = current.nextNode;
+          return;
+        }
+        previous = current;
+        current = current.nextNode;
+        i++;
+      }
+    },
   };
 }
 
@@ -111,13 +140,7 @@ newList.append(6);
 newList.append(4);
 newList.prepend(9);
 console.log(newList.toString());
-// console.log(newList.size());
-// console.log(newList.getHead());
-// console.log(newList.getTail());
-// console.log(newList.at(3));
-// newList.pop();
-// console.log(newList.getTail());
-// console.log(newList.toString());
-console.log(newList.contains(1));
-console.log(newList.contains(3));
-console.log(newList.find(1));
+newList.insertAt(2, 1);
+console.log(newList.toString());
+newList.removeAt(2);
+console.log(newList.toString());
